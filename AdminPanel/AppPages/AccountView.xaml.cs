@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AdminPanel.AppPages
 {
-
-
     public partial class AccountView : Page
     {
         private readonly Database.TestingSystemEntities database;
@@ -36,17 +23,34 @@ namespace AdminPanel.AppPages
             });
         }
 
-        private void OnClickEdit(object sender, RoutedEventArgs e)
+        public Database.Account GetSelected()
         {
-            if (lvAccounts.SelectedItem == null) return;
+            return lvAccounts.SelectedItem as Database.Account;
+        }
 
-            var selectedAccount = lvAccounts.SelectedItem as Database.Account;
-            if (selectedAccount == null) return;
-
-            ViewManager.AccountEditor.SetAccount(selectedAccount);
+        public void Change(Database.Account account)
+        {
+            ViewManager.AccountEditor.SetAccount(account);
             NavigationService.Navigate(ViewManager.AccountEditor);
         }
 
+        private void OnClickEdit(object sender, RoutedEventArgs e)
+        {
+            var selectedAccount = GetSelected();
+            if (selectedAccount == null) return;
+
+            Change(selectedAccount);
+        }
+        private void OnClickDelete(object sender, RoutedEventArgs e)
+        {
+            var selectedAccount = GetSelected();
+            if (selectedAccount == null) return;
+
+            accounts.Remove(selectedAccount);
+
+            database.Accounts.Remove(selectedAccount);
+            database.SaveChanges();
+        }
         private void OnClickCreate(object sender, RoutedEventArgs e)
         {
             var selectedAccount = new Database.Account()
@@ -60,21 +64,7 @@ namespace AdminPanel.AppPages
             database.Accounts.Add(selectedAccount);
             accounts.Add(selectedAccount);
 
-            ViewManager.AccountEditor.SetAccount(selectedAccount);
-            NavigationService.Navigate(ViewManager.AccountEditor);
-        }
-
-        private void OnClickDelete(object sender, RoutedEventArgs e)
-        {
-            if (lvAccounts.SelectedItem == null) return;
-
-            var selectedAccount = lvAccounts.SelectedItem as Database.Account;
-            if (selectedAccount == null) return;
-
-            accounts.Remove(selectedAccount);
-
-            database.Accounts.Remove(selectedAccount);
-            database.SaveChanges();
+            Change(selectedAccount);
         }
     }
 }
