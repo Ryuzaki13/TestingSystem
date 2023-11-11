@@ -12,25 +12,21 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class TeacherWorkload
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public TeacherWorkload()
         {
-            this.TeacherWorkloads = new HashSet<TeacherWorkload>();
-            this.TestAppointments = new HashSet<TestAppointment>();
+            this.Tests = new HashSet<Test>();
         }
     
         public long ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Patronymic { get; set; }
-        public byte RoleID { get; set; }
+        public long Teacher { get; set; }
+        public long Plan { get; set; }
     
-        public virtual Role Role { get; set; }
+        public virtual AcademicPlan AcademicPlan { get; set; }
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeacherWorkload> TeacherWorkloads { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestAppointment> TestAppointments { get; set; }
+        public virtual ICollection<Test> Tests { get; set; }
     }
 }

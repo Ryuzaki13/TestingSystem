@@ -27,5 +27,20 @@ namespace Database
     
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
+        public virtual DbSet<AcademicPlan> AcademicPlans { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<AnswerVariant> AnswerVariants { get; set; }
+        public virtual DbSet<Class> Classes { get; set; }
+        public virtual DbSet<ExecutionAttempt> ExecutionAttempts { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<QuestionType> QuestionTypes { get; set; }
+        public virtual DbSet<QuestionVariant> QuestionVariants { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Subject> Subjects { get; set; }
+        public virtual DbSet<TeacherWorkload> TeacherWorkloads { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<TestAppointment> TestAppointments { get; set; }
+        public virtual DbSet<TestQuestion> TestQuestions { get; set; }
+        public virtual DbSet<Variant> Variants { get; set; }
     }
 }

@@ -8,10 +8,8 @@ using System.Windows;
 
 namespace AdminPanel
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        
     }
 }

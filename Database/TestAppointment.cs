@@ -12,25 +12,27 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class TestAppointment
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public TestAppointment()
         {
-            this.TeacherWorkloads = new HashSet<TeacherWorkload>();
-            this.TestAppointments = new HashSet<TestAppointment>();
+            this.ExecutionAttempts = new HashSet<ExecutionAttempt>();
         }
     
         public long ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Patronymic { get; set; }
-        public byte RoleID { get; set; }
+        public long Test { get; set; }
+        public long StudentID { get; set; }
+        public long Responsible { get; set; }
+        public System.DateTime Time { get; set; }
+        public System.DateTime Deadline { get; set; }
+        public byte LeadTime { get; set; }
+        public byte AttemptCount { get; set; }
     
-        public virtual Role Role { get; set; }
+        public virtual Account Account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeacherWorkload> TeacherWorkloads { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestAppointment> TestAppointments { get; set; }
+        public virtual ICollection<ExecutionAttempt> ExecutionAttempts { get; set; }
+        public virtual Student Student { get; set; }
+        public virtual Test Test1 { get; set; }
     }
 }

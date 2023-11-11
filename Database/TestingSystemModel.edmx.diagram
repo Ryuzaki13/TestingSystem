@@ -4,10 +4,44 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="f9d98401174b45beba1960b55e312d80" Name="Diagram1" ZoomLevel="173">
+      <Diagram DiagramId="f9d98401174b45beba1960b55e312d80" Name="Diagram1" ZoomLevel="91">
         <EntityTypeShape EntityType="TestingSystemModel.Account" Width="1.5" PointX="3.625" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TestingSystemModel.Role" Width="1.5" PointX="1" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="TestingSystemModel.FK_Account_Role" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TestingSystemModel.AcademicPlan" Width="1.5" PointX="3" PointY="8.875" />
+        <EntityTypeShape EntityType="TestingSystemModel.Answer" Width="1.5" PointX="15.25" PointY="9.375" />
+        <EntityTypeShape EntityType="TestingSystemModel.AnswerVariant" Width="1.5" PointX="17.5" PointY="9.25" />
+        <EntityTypeShape EntityType="TestingSystemModel.Class" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="TestingSystemModel.ExecutionAttempt" Width="1.5" PointX="13" PointY="9.375" />
+        <EntityTypeShape EntityType="TestingSystemModel.Question" Width="1.5" PointX="8.5" PointY="0.75" />
+        <EntityTypeShape EntityType="TestingSystemModel.QuestionType" Width="1.5" PointX="6.25" PointY="2.75" />
+        <EntityTypeShape EntityType="TestingSystemModel.QuestionVariant" Width="1.5" PointX="17.5" PointY="3.5" />
+        <EntityTypeShape EntityType="TestingSystemModel.Student" Width="1.5" PointX="3" PointY="12.625" />
+        <EntityTypeShape EntityType="TestingSystemModel.Subject" Width="1.5" PointX="0.75" PointY="7.25" />
+        <EntityTypeShape EntityType="TestingSystemModel.TeacherWorkload" Width="1.5" PointX="6.25" PointY="5.375" />
+        <EntityTypeShape EntityType="TestingSystemModel.Test" Width="1.5" PointX="8.5" PointY="5" />
+        <EntityTypeShape EntityType="TestingSystemModel.TestAppointment" Width="1.5" PointX="10.75" PointY="8.75" />
+        <EntityTypeShape EntityType="TestingSystemModel.TestQuestion" Width="1.5" PointX="10.75" PointY="5.375" />
+        <EntityTypeShape EntityType="TestingSystemModel.Variant" Width="1.5" PointX="15.25" PointY="6.5" />
+        <AssociationConnector Association="TestingSystemModel.FK__AcademicP__Class__5441852A" />
+        <AssociationConnector Association="TestingSystemModel.FK__AcademicP__Subje__534D60F1" />
+        <AssociationConnector Association="TestingSystemModel.FK__TeacherWor__Plan__59063A47" />
+        <AssociationConnector Association="TestingSystemModel.FK__TeacherWo__Teach__5812160E" />
+        <AssociationConnector Association="TestingSystemModel.FK__TestAppoi__Respo__74AE54BC" />
+        <AssociationConnector Association="TestingSystemModel.FK__Answer__Executio__7A672E12" />
+        <AssociationConnector Association="TestingSystemModel.FK__Answer__Question__7B5B524B" />
+        <AssociationConnector Association="TestingSystemModel.FK__AnswerVar__Answe__7E37BEF6" />
+        <AssociationConnector Association="TestingSystemModel.FK__AnswerVar__Varia__7F2BE32F" />
+        <AssociationConnector Association="TestingSystemModel.FK__Student__Class__6FE99F9F" />
+        <AssociationConnector Association="TestingSystemModel.FK__Execution__TestA__778AC167" />
+        <AssociationConnector Association="TestingSystemModel.FK__Question__Type__619B8048" />
+        <AssociationConnector Association="TestingSystemModel.FK__QuestionV__Quest__6C190EBB" />
+        <AssociationConnector Association="TestingSystemModel.FK__TestQuest__Quest__66603565" />
+        <AssociationConnector Association="TestingSystemModel.FK__QuestionV__Varia__6D0D32F4" />
+        <AssociationConnector Association="TestingSystemModel.FK__TestAppoi__Stude__73BA3083" />
+        <AssociationConnector Association="TestingSystemModel.FK__Test__Teacher__5BE2A6F2" />
+        <AssociationConnector Association="TestingSystemModel.FK__TestAppoin__Test__72C60C4A" />
+        <AssociationConnector Association="TestingSystemModel.FK__TestQuest__TestI__656C112C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

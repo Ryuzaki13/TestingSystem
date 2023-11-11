@@ -12,25 +12,31 @@ namespace Database
     using System;
     using System.Collections.Generic;
     
-    public partial class Account
+    public partial class Question
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Account()
+        public Question()
         {
-            this.TeacherWorkloads = new HashSet<TeacherWorkload>();
-            this.TestAppointments = new HashSet<TestAppointment>();
+            this.Answers = new HashSet<Answer>();
+            this.QuestionVariants = new HashSet<QuestionVariant>();
+            this.TestQuestions = new HashSet<TestQuestion>();
         }
     
         public long ID { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Patronymic { get; set; }
-        public byte RoleID { get; set; }
+        public string Type { get; set; }
+        public double Weight { get; set; }
+        public string Text { get; set; }
+        public double Min5 { get; set; }
+        public double Min4 { get; set; }
+        public double Min3 { get; set; }
+        public string Hint { get; set; }
     
-        public virtual Role Role { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TeacherWorkload> TeacherWorkloads { get; set; }
+        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual QuestionType QuestionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TestAppointment> TestAppointments { get; set; }
+        public virtual ICollection<QuestionVariant> QuestionVariants { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TestQuestion> TestQuestions { get; set; }
     }
 }

@@ -50,11 +50,50 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AcademicPlan.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Account.cs">
       <DependentUpon>TestingSystemModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Answer.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AnswerVariant.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ExecutionAttempt.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Question.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionType.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="QuestionVariant.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Role.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Student.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Subject.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TeacherWorkload.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Test.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TestAppointment.cs">
       <DependentUpon>TestingSystemModel.tt</DependentUpon>
     </Compile>
     <Compile Include="TestingSystemModel.Context.cs">
@@ -71,6 +110,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TestingSystemModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="TestQuestion.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Variant.cs">
+      <DependentUpon>TestingSystemModel.tt</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

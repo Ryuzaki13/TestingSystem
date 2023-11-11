@@ -4,7 +4,15 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище TestingSystemModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище TestingSystemModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AcademicPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Class" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
         <EntityType Name="Account">
           <Key>
             <PropertyRef Name="ID" />
@@ -13,16 +21,165 @@
           <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Patronymic" Type="varchar" MaxLength="20" Nullable="false" />
-          <Property Name="RoleID" Type="tinyint" Nullable="false" />
+          <Property Name="RoleID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExecutionAttemptID" Type="bigint" Nullable="false" />
+          <Property Name="QuestionID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswerVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="AnswerID" Type="bigint" Nullable="false" />
+          <Property Name="VariantID" Type="bigint" />
+          <Property Name="VariantText" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ExecutionAttempt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="TestAppointmentID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Weight" Type="float" Nullable="false" />
+          <Property Name="Text" Type="text" Nullable="false" />
+          <Property Name="Min5" Type="float" Nullable="false" />
+          <Property Name="Min4" Type="float" Nullable="false" />
+          <Property Name="Min3" Type="float" Nullable="false" />
+          <Property Name="Hint" Type="text" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsManyVariant" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="QuestionVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionID" Type="bigint" Nullable="false" />
+          <Property Name="VariantID" Type="bigint" Nullable="false" />
+          <Property Name="IsCorrect" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="20" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Account_Role">
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Patronymic" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Class" Type="varchar" MaxLength="8" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TeacherWorkload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Teacher" Type="bigint" Nullable="false" />
+          <Property Name="Plan" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Teacher" Type="bigint" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="StandardLeadTime" Type="tinyint" Nullable="false" />
+          <Property Name="StandardAttemptCount" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestAppointment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Test" Type="bigint" Nullable="false" />
+          <Property Name="StudentID" Type="bigint" Nullable="false" />
+          <Property Name="Responsible" Type="bigint" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Deadline" Type="datetime" Nullable="false" />
+          <Property Name="LeadTime" Type="tinyint" Nullable="false" />
+          <Property Name="AttemptCount" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TestQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TestID" Type="bigint" Nullable="false" />
+          <Property Name="QuestionID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Variant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Text" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AcademicP__Class__0C85DE4D">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="AcademicPlan" Type="Self.AcademicPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="AcademicPlan">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AcademicP__Subje__0B91BA14">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="1" />
+          <End Role="AcademicPlan" Type="Self.AcademicPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="AcademicPlan">
+              <PropertyRef Name="Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Account__RoleID__03F0984C">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="Account" Type="Self.Account" Multiplicity="*" />
           <ReferentialConstraint>
@@ -34,16 +191,310 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Answer__Executio__32AB8735">
+          <End Role="ExecutionAttempt" Type="Self.ExecutionAttempt" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExecutionAttempt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="ExecutionAttemptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answer__Question__339FAB6E">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerVar__Answe__367C1819">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
+          <End Role="AnswerVariant" Type="Self.AnswerVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerVariant">
+              <PropertyRef Name="AnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerVar__Varia__37703C52">
+          <End Role="Variant" Type="Self.Variant" Multiplicity="0..1" />
+          <End Role="AnswerVariant" Type="Self.AnswerVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Variant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerVariant">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Execution__TestA__2FCF1A8A">
+          <End Role="TestAppointment" Type="Self.TestAppointment" Multiplicity="1" />
+          <End Role="ExecutionAttempt" Type="Self.ExecutionAttempt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExecutionAttempt">
+              <PropertyRef Name="TestAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__Type__19DFD96B">
+          <End Role="QuestionType" Type="Self.QuestionType" Multiplicity="1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionV__Quest__245D67DE">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionV__Varia__25518C17">
+          <End Role="Variant" Type="Self.Variant" Multiplicity="1" />
+          <End Role="QuestionVariant" Type="Self.QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Variant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__Class__282DF8C2">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherWo__Teach__10566F31">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="TeacherWorkload" Type="Self.TeacherWorkload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeacherWorkload">
+              <PropertyRef Name="Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherWor__Plan__114A936A">
+          <End Role="AcademicPlan" Type="Self.AcademicPlan" Multiplicity="1" />
+          <End Role="TeacherWorkload" Type="Self.TeacherWorkload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeacherWorkload">
+              <PropertyRef Name="Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test__Teacher__14270015">
+          <End Role="TeacherWorkload" Type="Self.TeacherWorkload" Multiplicity="1" />
+          <End Role="Test" Type="Self.Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherWorkload">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoi__Respo__2CF2ADDF">
+          <End Role="Account" Type="Self.Account" Multiplicity="1" />
+          <End Role="TestAppointment" Type="Self.TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="Responsible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoi__Stude__2BFE89A6">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="TestAppointment" Type="Self.TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoin__Test__2B0A656D">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestAppointment" Type="Self.TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="Test" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestQuest__Quest__1EA48E88">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestQuest__TestI__1DB06A4F">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="TestQuestion" Type="Self.TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="Хранилище TestingSystemModelContainer">
+          <EntitySet Name="AcademicPlan" EntityType="Self.AcademicPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Account" EntityType="Self.Account" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerVariant" EntityType="Self.AnswerVariant" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ExecutionAttempt" EntityType="Self.ExecutionAttempt" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionType" EntityType="Self.QuestionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QuestionVariant" EntityType="Self.QuestionVariant" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Account_Role" Association="Self.FK_Account_Role">
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TeacherWorkload" EntityType="Self.TeacherWorkload" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestAppointment" EntityType="Self.TestAppointment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestQuestion" EntityType="Self.TestQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Variant" EntityType="Self.Variant" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AcademicP__Class__0C85DE4D" Association="Self.FK__AcademicP__Class__0C85DE4D">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="AcademicPlan" EntitySet="AcademicPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicP__Subje__0B91BA14" Association="Self.FK__AcademicP__Subje__0B91BA14">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="AcademicPlan" EntitySet="AcademicPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Account__RoleID__03F0984C" Association="Self.FK__Account__RoleID__03F0984C">
             <End Role="Role" EntitySet="Role" />
             <End Role="Account" EntitySet="Account" />
           </AssociationSet>
+          <AssociationSet Name="FK__Answer__Executio__32AB8735" Association="Self.FK__Answer__Executio__32AB8735">
+            <End Role="ExecutionAttempt" EntitySet="ExecutionAttempt" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answer__Question__339FAB6E" Association="Self.FK__Answer__Question__339FAB6E">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerVar__Answe__367C1819" Association="Self.FK__AnswerVar__Answe__367C1819">
+            <End Role="Answer" EntitySet="Answer" />
+            <End Role="AnswerVariant" EntitySet="AnswerVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerVar__Varia__37703C52" Association="Self.FK__AnswerVar__Varia__37703C52">
+            <End Role="Variant" EntitySet="Variant" />
+            <End Role="AnswerVariant" EntitySet="AnswerVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Execution__TestA__2FCF1A8A" Association="Self.FK__Execution__TestA__2FCF1A8A">
+            <End Role="TestAppointment" EntitySet="TestAppointment" />
+            <End Role="ExecutionAttempt" EntitySet="ExecutionAttempt" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__Type__19DFD96B" Association="Self.FK__Question__Type__19DFD96B">
+            <End Role="QuestionType" EntitySet="QuestionType" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionV__Quest__245D67DE" Association="Self.FK__QuestionV__Quest__245D67DE">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionV__Varia__25518C17" Association="Self.FK__QuestionV__Varia__25518C17">
+            <End Role="Variant" EntitySet="Variant" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariant" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__Class__282DF8C2" Association="Self.FK__Student__Class__282DF8C2">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherWo__Teach__10566F31" Association="Self.FK__TeacherWo__Teach__10566F31">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkload" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherWor__Plan__114A936A" Association="Self.FK__TeacherWor__Plan__114A936A">
+            <End Role="AcademicPlan" EntitySet="AcademicPlan" />
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkload" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test__Teacher__14270015" Association="Self.FK__Test__Teacher__14270015">
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkload" />
+            <End Role="Test" EntitySet="Test" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoi__Respo__2CF2ADDF" Association="Self.FK__TestAppoi__Respo__2CF2ADDF">
+            <End Role="Account" EntitySet="Account" />
+            <End Role="TestAppointment" EntitySet="TestAppointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoi__Stude__2BFE89A6" Association="Self.FK__TestAppoi__Stude__2BFE89A6">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="TestAppointment" EntitySet="TestAppointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoin__Test__2B0A656D" Association="Self.FK__TestAppoin__Test__2B0A656D">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestAppointment" EntitySet="TestAppointment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestQuest__Quest__1EA48E88" Association="Self.FK__TestQuest__Quest__1EA48E88">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestQuest__TestI__1DB06A4F" Association="Self.FK__TestQuest__TestI__1DB06A4F">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="TestQuestion" EntitySet="TestQuestion" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TestingSystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -57,6 +508,8 @@
           <Property Name="Patronymic" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="RoleID" Type="Byte" Nullable="false" />
           <NavigationProperty Name="Role" Relationship="Self.FK_Account_Role" FromRole="Account" ToRole="Role" />
+          <NavigationProperty Name="TeacherWorkloads" Relationship="TestingSystemModel.FK__TeacherWo__Teach__5812160E" FromRole="Account" ToRole="TeacherWorkload" />
+          <NavigationProperty Name="TestAppointments" Relationship="TestingSystemModel.FK__TestAppoi__Respo__74AE54BC" FromRole="Account" ToRole="TestAppointment" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -85,7 +538,495 @@
             <End Role="Role" EntitySet="Roles" />
             <End Role="Account" EntitySet="Accounts" />
           </AssociationSet>
+          <EntitySet Name="AcademicPlans" EntityType="TestingSystemModel.AcademicPlan" />
+          <EntitySet Name="Answers" EntityType="TestingSystemModel.Answer" />
+          <EntitySet Name="AnswerVariants" EntityType="TestingSystemModel.AnswerVariant" />
+          <EntitySet Name="Classes" EntityType="TestingSystemModel.Class" />
+          <EntitySet Name="ExecutionAttempts" EntityType="TestingSystemModel.ExecutionAttempt" />
+          <EntitySet Name="Questions" EntityType="TestingSystemModel.Question" />
+          <EntitySet Name="QuestionTypes" EntityType="TestingSystemModel.QuestionType" />
+          <EntitySet Name="QuestionVariants" EntityType="TestingSystemModel.QuestionVariant" />
+          <EntitySet Name="Students" EntityType="TestingSystemModel.Student" />
+          <EntitySet Name="Subjects" EntityType="TestingSystemModel.Subject" />
+          <EntitySet Name="TeacherWorkloads" EntityType="TestingSystemModel.TeacherWorkload" />
+          <EntitySet Name="Tests" EntityType="TestingSystemModel.Test" />
+          <EntitySet Name="TestAppointments" EntityType="TestingSystemModel.TestAppointment" />
+          <EntitySet Name="TestQuestions" EntityType="TestingSystemModel.TestQuestion" />
+          <EntitySet Name="Variants" EntityType="TestingSystemModel.Variant" />
+          <AssociationSet Name="FK__AcademicP__Class__5441852A" Association="TestingSystemModel.FK__AcademicP__Class__5441852A">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="AcademicPlan" EntitySet="AcademicPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AcademicP__Subje__534D60F1" Association="TestingSystemModel.FK__AcademicP__Subje__534D60F1">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="AcademicPlan" EntitySet="AcademicPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherWor__Plan__59063A47" Association="TestingSystemModel.FK__TeacherWor__Plan__59063A47">
+            <End Role="AcademicPlan" EntitySet="AcademicPlans" />
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkloads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TeacherWo__Teach__5812160E" Association="TestingSystemModel.FK__TeacherWo__Teach__5812160E">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkloads" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoi__Respo__74AE54BC" Association="TestingSystemModel.FK__TestAppoi__Respo__74AE54BC">
+            <End Role="Account" EntitySet="Accounts" />
+            <End Role="TestAppointment" EntitySet="TestAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answer__Executio__7A672E12" Association="TestingSystemModel.FK__Answer__Executio__7A672E12">
+            <End Role="ExecutionAttempt" EntitySet="ExecutionAttempts" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Answer__Question__7B5B524B" Association="TestingSystemModel.FK__Answer__Question__7B5B524B">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerVar__Answe__7E37BEF6" Association="TestingSystemModel.FK__AnswerVar__Answe__7E37BEF6">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="AnswerVariant" EntitySet="AnswerVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerVar__Varia__7F2BE32F" Association="TestingSystemModel.FK__AnswerVar__Varia__7F2BE32F">
+            <End Role="Variant" EntitySet="Variants" />
+            <End Role="AnswerVariant" EntitySet="AnswerVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Student__Class__6FE99F9F" Association="TestingSystemModel.FK__Student__Class__6FE99F9F">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Execution__TestA__778AC167" Association="TestingSystemModel.FK__Execution__TestA__778AC167">
+            <End Role="TestAppointment" EntitySet="TestAppointments" />
+            <End Role="ExecutionAttempt" EntitySet="ExecutionAttempts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__Type__619B8048" Association="TestingSystemModel.FK__Question__Type__619B8048">
+            <End Role="QuestionType" EntitySet="QuestionTypes" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionV__Quest__6C190EBB" Association="TestingSystemModel.FK__QuestionV__Quest__6C190EBB">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestQuest__Quest__66603565" Association="TestingSystemModel.FK__TestQuest__Quest__66603565">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="TestQuestion" EntitySet="TestQuestions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__QuestionV__Varia__6D0D32F4" Association="TestingSystemModel.FK__QuestionV__Varia__6D0D32F4">
+            <End Role="Variant" EntitySet="Variants" />
+            <End Role="QuestionVariant" EntitySet="QuestionVariants" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoi__Stude__73BA3083" Association="TestingSystemModel.FK__TestAppoi__Stude__73BA3083">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="TestAppointment" EntitySet="TestAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test__Teacher__5BE2A6F2" Association="TestingSystemModel.FK__Test__Teacher__5BE2A6F2">
+            <End Role="TeacherWorkload" EntitySet="TeacherWorkloads" />
+            <End Role="Test" EntitySet="Tests" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestAppoin__Test__72C60C4A" Association="TestingSystemModel.FK__TestAppoin__Test__72C60C4A">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestAppointment" EntitySet="TestAppointments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TestQuest__TestI__656C112C" Association="TestingSystemModel.FK__TestQuest__TestI__656C112C">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="TestQuestion" EntitySet="TestQuestions" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="AcademicPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Subject" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Class1" Relationship="TestingSystemModel.FK__AcademicP__Class__5441852A" FromRole="AcademicPlan" ToRole="Class" />
+          <NavigationProperty Name="Subject1" Relationship="TestingSystemModel.FK__AcademicP__Subje__534D60F1" FromRole="AcademicPlan" ToRole="Subject" />
+          <NavigationProperty Name="TeacherWorkloads" Relationship="TestingSystemModel.FK__TeacherWor__Plan__59063A47" FromRole="AcademicPlan" ToRole="TeacherWorkload" />
+        </EntityType>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExecutionAttemptID" Type="Int64" Nullable="false" />
+          <Property Name="QuestionID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="ExecutionAttempt" Relationship="TestingSystemModel.FK__Answer__Executio__7A672E12" FromRole="Answer" ToRole="ExecutionAttempt" />
+          <NavigationProperty Name="Question" Relationship="TestingSystemModel.FK__Answer__Question__7B5B524B" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="AnswerVariants" Relationship="TestingSystemModel.FK__AnswerVar__Answe__7E37BEF6" FromRole="Answer" ToRole="AnswerVariant" />
+        </EntityType>
+        <EntityType Name="AnswerVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AnswerID" Type="Int64" Nullable="false" />
+          <Property Name="VariantID" Type="Int64" />
+          <Property Name="VariantText" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answer" Relationship="TestingSystemModel.FK__AnswerVar__Answe__7E37BEF6" FromRole="AnswerVariant" ToRole="Answer" />
+          <NavigationProperty Name="Variant" Relationship="TestingSystemModel.FK__AnswerVar__Varia__7F2BE32F" FromRole="AnswerVariant" ToRole="Variant" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Number" />
+          </Key>
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AcademicPlans" Relationship="TestingSystemModel.FK__AcademicP__Class__5441852A" FromRole="Class" ToRole="AcademicPlan" />
+          <NavigationProperty Name="Students" Relationship="TestingSystemModel.FK__Student__Class__6FE99F9F" FromRole="Class" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="ExecutionAttempt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TestAppointmentID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Answers" Relationship="TestingSystemModel.FK__Answer__Executio__7A672E12" FromRole="ExecutionAttempt" ToRole="Answer" />
+          <NavigationProperty Name="TestAppointment" Relationship="TestingSystemModel.FK__Execution__TestA__778AC167" FromRole="ExecutionAttempt" ToRole="TestAppointment" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Weight" Type="Double" Nullable="false" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Min5" Type="Double" Nullable="false" />
+          <Property Name="Min4" Type="Double" Nullable="false" />
+          <Property Name="Min3" Type="Double" Nullable="false" />
+          <Property Name="Hint" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answers" Relationship="TestingSystemModel.FK__Answer__Question__7B5B524B" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="QuestionType" Relationship="TestingSystemModel.FK__Question__Type__619B8048" FromRole="Question" ToRole="QuestionType" />
+          <NavigationProperty Name="QuestionVariants" Relationship="TestingSystemModel.FK__QuestionV__Quest__6C190EBB" FromRole="Question" ToRole="QuestionVariant" />
+          <NavigationProperty Name="TestQuestions" Relationship="TestingSystemModel.FK__TestQuest__Quest__66603565" FromRole="Question" ToRole="TestQuestion" />
+        </EntityType>
+        <EntityType Name="QuestionType">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsManyVariant" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Questions" Relationship="TestingSystemModel.FK__Question__Type__619B8048" FromRole="QuestionType" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="QuestionVariant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionID" Type="Int64" Nullable="false" />
+          <Property Name="VariantID" Type="Int64" Nullable="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="TestingSystemModel.FK__QuestionV__Quest__6C190EBB" FromRole="QuestionVariant" ToRole="Question" />
+          <NavigationProperty Name="Variant" Relationship="TestingSystemModel.FK__QuestionV__Varia__6D0D32F4" FromRole="QuestionVariant" ToRole="Variant" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Patronymic" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Class" Type="String" Nullable="false" MaxLength="8" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Class1" Relationship="TestingSystemModel.FK__Student__Class__6FE99F9F" FromRole="Student" ToRole="Class" />
+          <NavigationProperty Name="TestAppointments" Relationship="TestingSystemModel.FK__TestAppoi__Stude__73BA3083" FromRole="Student" ToRole="TestAppointment" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="Name" />
+          </Key>
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AcademicPlans" Relationship="TestingSystemModel.FK__AcademicP__Subje__534D60F1" FromRole="Subject" ToRole="AcademicPlan" />
+        </EntityType>
+        <EntityType Name="TeacherWorkload">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Teacher" Type="Int64" Nullable="false" />
+          <Property Name="Plan" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="AcademicPlan" Relationship="TestingSystemModel.FK__TeacherWor__Plan__59063A47" FromRole="TeacherWorkload" ToRole="AcademicPlan" />
+          <NavigationProperty Name="Account" Relationship="TestingSystemModel.FK__TeacherWo__Teach__5812160E" FromRole="TeacherWorkload" ToRole="Account" />
+          <NavigationProperty Name="Tests" Relationship="TestingSystemModel.FK__Test__Teacher__5BE2A6F2" FromRole="TeacherWorkload" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Teacher" Type="Int64" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StandardLeadTime" Type="Byte" Nullable="false" />
+          <Property Name="StandardAttemptCount" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="TeacherWorkload" Relationship="TestingSystemModel.FK__Test__Teacher__5BE2A6F2" FromRole="Test" ToRole="TeacherWorkload" />
+          <NavigationProperty Name="TestAppointments" Relationship="TestingSystemModel.FK__TestAppoin__Test__72C60C4A" FromRole="Test" ToRole="TestAppointment" />
+          <NavigationProperty Name="TestQuestions" Relationship="TestingSystemModel.FK__TestQuest__TestI__656C112C" FromRole="Test" ToRole="TestQuestion" />
+        </EntityType>
+        <EntityType Name="TestAppointment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Test" Type="Int64" Nullable="false" />
+          <Property Name="StudentID" Type="Int64" Nullable="false" />
+          <Property Name="Responsible" Type="Int64" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Deadline" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LeadTime" Type="Byte" Nullable="false" />
+          <Property Name="AttemptCount" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="Account" Relationship="TestingSystemModel.FK__TestAppoi__Respo__74AE54BC" FromRole="TestAppointment" ToRole="Account" />
+          <NavigationProperty Name="ExecutionAttempts" Relationship="TestingSystemModel.FK__Execution__TestA__778AC167" FromRole="TestAppointment" ToRole="ExecutionAttempt" />
+          <NavigationProperty Name="Student" Relationship="TestingSystemModel.FK__TestAppoi__Stude__73BA3083" FromRole="TestAppointment" ToRole="Student" />
+          <NavigationProperty Name="Test1" Relationship="TestingSystemModel.FK__TestAppoin__Test__72C60C4A" FromRole="TestAppointment" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="TestQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TestID" Type="Int64" Nullable="false" />
+          <Property Name="QuestionID" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Question" Relationship="TestingSystemModel.FK__TestQuest__Quest__66603565" FromRole="TestQuestion" ToRole="Question" />
+          <NavigationProperty Name="Test" Relationship="TestingSystemModel.FK__TestQuest__TestI__656C112C" FromRole="TestQuestion" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Variant">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Text" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AnswerVariants" Relationship="TestingSystemModel.FK__AnswerVar__Varia__7F2BE32F" FromRole="Variant" ToRole="AnswerVariant" />
+          <NavigationProperty Name="QuestionVariants" Relationship="TestingSystemModel.FK__QuestionV__Varia__6D0D32F4" FromRole="Variant" ToRole="QuestionVariant" />
+        </EntityType>
+        <Association Name="FK__AcademicP__Class__5441852A">
+          <End Type="TestingSystemModel.Class" Role="Class" Multiplicity="1" />
+          <End Type="TestingSystemModel.AcademicPlan" Role="AcademicPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="AcademicPlan">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AcademicP__Subje__534D60F1">
+          <End Type="TestingSystemModel.Subject" Role="Subject" Multiplicity="1" />
+          <End Type="TestingSystemModel.AcademicPlan" Role="AcademicPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="AcademicPlan">
+              <PropertyRef Name="Subject" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherWor__Plan__59063A47">
+          <End Type="TestingSystemModel.AcademicPlan" Role="AcademicPlan" Multiplicity="1" />
+          <End Type="TestingSystemModel.TeacherWorkload" Role="TeacherWorkload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AcademicPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeacherWorkload">
+              <PropertyRef Name="Plan" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TeacherWo__Teach__5812160E">
+          <End Type="TestingSystemModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="TestingSystemModel.TeacherWorkload" Role="TeacherWorkload" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TeacherWorkload">
+              <PropertyRef Name="Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoi__Respo__74AE54BC">
+          <End Type="TestingSystemModel.Account" Role="Account" Multiplicity="1" />
+          <End Type="TestingSystemModel.TestAppointment" Role="TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Account">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="Responsible" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answer__Executio__7A672E12">
+          <End Type="TestingSystemModel.ExecutionAttempt" Role="ExecutionAttempt" Multiplicity="1" />
+          <End Type="TestingSystemModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ExecutionAttempt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="ExecutionAttemptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Answer__Question__7B5B524B">
+          <End Type="TestingSystemModel.Question" Role="Question" Multiplicity="1" />
+          <End Type="TestingSystemModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerVar__Answe__7E37BEF6">
+          <End Type="TestingSystemModel.Answer" Role="Answer" Multiplicity="1" />
+          <End Type="TestingSystemModel.AnswerVariant" Role="AnswerVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Answer">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerVariant">
+              <PropertyRef Name="AnswerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerVar__Varia__7F2BE32F">
+          <End Type="TestingSystemModel.Variant" Role="Variant" Multiplicity="0..1" />
+          <End Type="TestingSystemModel.AnswerVariant" Role="AnswerVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Variant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="AnswerVariant">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Student__Class__6FE99F9F">
+          <End Type="TestingSystemModel.Class" Role="Class" Multiplicity="1" />
+          <End Type="TestingSystemModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Number" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="Class" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Execution__TestA__778AC167">
+          <End Type="TestingSystemModel.TestAppointment" Role="TestAppointment" Multiplicity="1" />
+          <End Type="TestingSystemModel.ExecutionAttempt" Role="ExecutionAttempt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TestAppointment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ExecutionAttempt">
+              <PropertyRef Name="TestAppointmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__Type__619B8048">
+          <End Type="TestingSystemModel.QuestionType" Role="QuestionType" Multiplicity="1" />
+          <End Type="TestingSystemModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="QuestionType">
+              <PropertyRef Name="Name" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionV__Quest__6C190EBB">
+          <End Type="TestingSystemModel.Question" Role="Question" Multiplicity="1" />
+          <End Type="TestingSystemModel.QuestionVariant" Role="QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestQuest__Quest__66603565">
+          <End Type="TestingSystemModel.Question" Role="Question" Multiplicity="1" />
+          <End Type="TestingSystemModel.TestQuestion" Role="TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="QuestionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__QuestionV__Varia__6D0D32F4">
+          <End Type="TestingSystemModel.Variant" Role="Variant" Multiplicity="1" />
+          <End Type="TestingSystemModel.QuestionVariant" Role="QuestionVariant" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Variant">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="QuestionVariant">
+              <PropertyRef Name="VariantID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoi__Stude__73BA3083">
+          <End Type="TestingSystemModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="TestingSystemModel.TestAppointment" Role="TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test__Teacher__5BE2A6F2">
+          <End Type="TestingSystemModel.TeacherWorkload" Role="TeacherWorkload" Multiplicity="1" />
+          <End Type="TestingSystemModel.Test" Role="Test" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TeacherWorkload">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Test">
+              <PropertyRef Name="Teacher" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestAppoin__Test__72C60C4A">
+          <End Type="TestingSystemModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="TestingSystemModel.TestAppointment" Role="TestAppointment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestAppointment">
+              <PropertyRef Name="Test" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TestQuest__TestI__656C112C">
+          <End Type="TestingSystemModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="TestingSystemModel.TestQuestion" Role="TestQuestion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TestQuestion">
+              <PropertyRef Name="TestID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -108,6 +1049,154 @@
               <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AcademicPlans">
+            <EntityTypeMapping TypeName="TestingSystemModel.AcademicPlan">
+              <MappingFragment StoreEntitySet="AcademicPlan">
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="TestingSystemModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="ExecutionAttemptID" ColumnName="ExecutionAttemptID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerVariants">
+            <EntityTypeMapping TypeName="TestingSystemModel.AnswerVariant">
+              <MappingFragment StoreEntitySet="AnswerVariant">
+                <ScalarProperty Name="VariantText" ColumnName="VariantText" />
+                <ScalarProperty Name="VariantID" ColumnName="VariantID" />
+                <ScalarProperty Name="AnswerID" ColumnName="AnswerID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Classes">
+            <EntityTypeMapping TypeName="TestingSystemModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="Number" ColumnName="Number" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExecutionAttempts">
+            <EntityTypeMapping TypeName="TestingSystemModel.ExecutionAttempt">
+              <MappingFragment StoreEntitySet="ExecutionAttempt">
+                <ScalarProperty Name="TestAppointmentID" ColumnName="TestAppointmentID" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="TestingSystemModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Hint" ColumnName="Hint" />
+                <ScalarProperty Name="Min3" ColumnName="Min3" />
+                <ScalarProperty Name="Min4" ColumnName="Min4" />
+                <ScalarProperty Name="Min5" ColumnName="Min5" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionTypes">
+            <EntityTypeMapping TypeName="TestingSystemModel.QuestionType">
+              <MappingFragment StoreEntitySet="QuestionType">
+                <ScalarProperty Name="IsManyVariant" ColumnName="IsManyVariant" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QuestionVariants">
+            <EntityTypeMapping TypeName="TestingSystemModel.QuestionVariant">
+              <MappingFragment StoreEntitySet="QuestionVariant">
+                <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+                <ScalarProperty Name="VariantID" ColumnName="VariantID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="TestingSystemModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Class" ColumnName="Class" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="TestingSystemModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TeacherWorkloads">
+            <EntityTypeMapping TypeName="TestingSystemModel.TeacherWorkload">
+              <MappingFragment StoreEntitySet="TeacherWorkload">
+                <ScalarProperty Name="Plan" ColumnName="Plan" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="TestingSystemModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="StandardAttemptCount" ColumnName="StandardAttemptCount" />
+                <ScalarProperty Name="StandardLeadTime" ColumnName="StandardLeadTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Teacher" ColumnName="Teacher" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestAppointments">
+            <EntityTypeMapping TypeName="TestingSystemModel.TestAppointment">
+              <MappingFragment StoreEntitySet="TestAppointment">
+                <ScalarProperty Name="AttemptCount" ColumnName="AttemptCount" />
+                <ScalarProperty Name="LeadTime" ColumnName="LeadTime" />
+                <ScalarProperty Name="Deadline" ColumnName="Deadline" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Responsible" ColumnName="Responsible" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Test" ColumnName="Test" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestQuestions">
+            <EntityTypeMapping TypeName="TestingSystemModel.TestQuestion">
+              <MappingFragment StoreEntitySet="TestQuestion">
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="TestID" ColumnName="TestID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Variants">
+            <EntityTypeMapping TypeName="TestingSystemModel.Variant">
+              <MappingFragment StoreEntitySet="Variant">
+                <ScalarProperty Name="Text" ColumnName="Text" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
